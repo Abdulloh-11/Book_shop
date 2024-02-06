@@ -1,0 +1,11 @@
+.root {
+    @apply flex items-center justify-center h-screen flex-col gap-6
+}
+
+.root h1 {
+    @apply mb-4 text-8xl font-normal
+}
+
+.button-wrapper {
+    @apply flex gap-6
+}
