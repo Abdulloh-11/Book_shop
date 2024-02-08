@@ -5,7 +5,10 @@ import styles from "../Register/styles.module.css";
 import Input from "../../components/UI/Input";
 import React, {useContext, useState} from "react";
 import {UserContext} from "../../context/AppContext";
+import { ToastContainer, toast } from 'react-toastify';
 import {useNavigate} from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+import { Notification } from '../../Notification/Notification';
 
 const Index = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -38,10 +41,17 @@ const Index = () => {
                     username: response.data?.admin?.username,
                     accessToken: response.data?.tokens?.access_token
                 }))
-                navigate("/", {replace: true})
+               
+                if (response.status === 201) {
+                    Notification( {text: response?.data?.message, type: "success"})
+                    setTimeout(() => {
+                        navigate("/", {replace: true})
+                    }, 2500)
+                }
             })
             .catch(errors => {
-                alert(errors?.response?.data?.message)
+                Notification( {text: errors.response?.data?.message[0], type: "error"})
+                
             })
             .finally(() => {
                 setIsLoading(false)
@@ -50,6 +60,7 @@ const Index = () => {
 
     return (
         <div className={styles.root}>
+         <ToastContainer />
             <h1>Register</h1>
             <div className="min-w-[30rem] flex flex-col gap-6">
                 <div>

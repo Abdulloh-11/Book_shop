@@ -41,7 +41,7 @@ export default function Author() {
     }
 
     return (
-        <div className="container flex gap-96">
+        <div className=" flex gap-96">
         <Navbar/>
         
         <div className='mx-44'>

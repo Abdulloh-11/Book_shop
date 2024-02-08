@@ -41,7 +41,7 @@ const Index = () => {
     }
     return (
 
-        <div className="container" >
+        <div className="rcol" >
             <Navbar />
 
 

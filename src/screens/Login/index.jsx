@@ -6,6 +6,10 @@ import {useForm} from "react-hook-form"
 import {axios} from "../../api/axios";
 import {UserContext} from "../../context/AppContext";
 import {useNavigate} from "react-router-dom";
+import { Notification } from '../../Notification/Notification';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Index = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -28,20 +32,34 @@ const Index = () => {
         setIsLoading(true)
         axios.post("auth/signin", data)
             .then(response => {
-                navigate("/", {replace: true})
+                if (response.status === 201) {
+                    Notification( {text: response?.data?.message, type: "success"})
+                    setTimeout(() => {
+                        navigate("/books", {replace: true})
+                    }, 7500)
+                }
+              
+                
+                
                 handleUser({
                     fullName: response.data?.admin?.full_name,
                     username: response.data?.admin?.username,
                     accessToken: response.data?.tokens?.access_token
+                    
                 })
+               
                 localStorage.setItem("user", JSON.stringify({
                     fullName: response.data?.admin?.full_name,
                     username: response.data?.admin?.username,
                     accessToken: response.data?.tokens?.access_token
                 }))
+              
+               
             })
             .catch(errors => {
-                alert(errors?.response?.data?.message)
+                Notification( {text: errors.response?.data?.message[0], type: "error"})
+             
+                
             })
             .finally(() => {
                 setIsLoading(false)
@@ -50,6 +68,7 @@ const Index = () => {
 
     return (
         <div className={styles.root}>
+        <ToastContainer/>
             <h1>Login</h1>
             <div className="min-w-[30rem] flex flex-col gap-6">
                 <div>

@@ -7,7 +7,7 @@ import Login from "./screens/Login";
 import Booklist from "./components/Booklist";
 import SingleBook from "./components/Booklist/SingleBook";
 import Navbar from "./screens/Navbar/Navbar";
-import Categories from "./components/Categories/Categories";
+import Categories from "./components/Categories/Categories"; 
 import Author from "./components/Author/Author";
 import Single_Author from "./components/Author/Single_Author";
 
